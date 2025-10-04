@@ -23,15 +23,46 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+API REST de gerenciamento de TODOs construída com [NestJS](https://github.com/nestjs/nest), TypeORM e PostgreSQL.
 
-## Project setup
+## Funcionalidades
+
+- ✅ CRUD completo de TODOs
+- ✅ Validação de dados com class-validator
+- ✅ Banco de dados PostgreSQL com TypeORM
+- ✅ Timestamps automáticos (criação e atualização)
+- ✅ UUIDs como identificadores
+- ✅ Toggle de status de conclusão
+
+## Requisitos
+
+- Node.js >= 18
+- PostgreSQL >= 14
+
+## Configuração
+
+1. Clone o repositório
+2. Instale as dependências:
 
 ```bash
 $ npm install
 ```
 
-## Compile and run the project
+3. Configure as variáveis de ambiente:
+
+```bash
+$ cp .env.example .env
+```
+
+Edite o arquivo `.env` com suas configurações do PostgreSQL.
+
+4. Certifique-se de que o PostgreSQL está rodando e crie o banco de dados:
+
+```sql
+CREATE DATABASE todo_db;
+```
+
+## Executando a aplicação
 
 ```bash
 # development
@@ -42,6 +73,42 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
+```
+
+A API estará disponível em `http://localhost:3000`
+
+## Endpoints da API
+
+### TODOs
+
+- `GET /todos` - Lista todos os TODOs
+- `GET /todos/:id` - Busca um TODO específico
+- `POST /todos` - Cria um novo TODO
+- `PATCH /todos/:id` - Atualiza um TODO
+- `DELETE /todos/:id` - Remove um TODO
+- `PATCH /todos/:id/toggle` - Alterna o status de conclusão
+
+### Exemplo de Requisição
+
+**Criar TODO:**
+```bash
+curl -X POST http://localhost:3000/todos \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Minha tarefa",
+    "description": "Descrição da tarefa",
+    "completed": false
+  }'
+```
+
+**Listar TODOs:**
+```bash
+curl http://localhost:3000/todos
+```
+
+**Alternar status:**
+```bash
+curl -X PATCH http://localhost:3000/todos/{id}/toggle
 ```
 
 ## Run tests
