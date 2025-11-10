@@ -1,0 +1,21 @@
+services:
+  db-postgres:
+    image: postgres:16-alpine          # Banco PostgreSQL
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    container_name: app_database
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    volumes:
+      - dados_postgres:/var/lib/postgresql/data
+    networks:
+      - net_1
+volumes:
+  dados_postgres:
+
+networks:
+  net_1:
+    driver: bridge
